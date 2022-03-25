@@ -38,3 +38,6 @@ const questions = [
     answer: "1. break",
   },
 ];
+
+
+alert("Welcome to the JavaScript Quiz!");
