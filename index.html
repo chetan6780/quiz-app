@@ -11,22 +11,57 @@
 </head>
 
 <body>
+
     <header>
-        <a id=leaderboard>View Highscores <i class="fas fa-hand-point-left fa-lg"></i>
+        <a class="highscore-btn" id=leaderboard>View Highscores <i class="fas fa-hand-point-left fa-lg"></i>
             </i></a>
-        <p>Time: 10</p>
+        <p>Time: 60</p>
     </header>
+
     <main>
-        <div class="box">
+
+        <div class="box unhide">
             <h1>Coding Quiz Challenge</h1>
             <p>Try to answer the following code-related questions within the time limit.</p>
             <p>Keep in mind that incorrect answers will be penalize your score/time by time by 10 seconds.</p>
-            <button class="btn">Start Quiz</button>
+            <button class="btn start-btn">Start Quiz</button>
         </div>
-        <div class="box__questions">
-            
+
+
+        <div class="box__questions hide">
+            <h1 class="question">Arrays in JavaScript can be used to store ______.</h1>
+            <div class="options">
+                <p>1. numbers and strings</p>
+                <p>2. other arrays</p>
+                <p>3. booleans</p>
+                <p>4. all of the above</p>
+            </div>
+            <hr>
+            <p>Correct</p>
+        </div>
+
+        <div class="box__highscores hide">
+            <h1>Highscores</h1>
+            <div class="list">
+                <ol>
+                    <li>SJ - 43</li>
+                    <li>AJ - 38</li>
+                </ol>
+            </div>
+            <button class="btn back">Go Back</button>
+            <button class="btn">Clear Highscores</button>
+        </div>
+
+        <div class="box__end hide">
+            <h1>All Done</h1>
+            <p>Your final score is 9.</p>
+            <p>
+                Enter initials: <input type="text">
+                <button class="btn">submit</button>
+            </p>
         </div>
     </main>
+
     <script src="assets/script.js"></script>
 </body>
 

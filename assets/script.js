@@ -51,3 +51,44 @@ const questions = [
   },
 ];
 
+const box = document.querySelector(".box");
+const questionsBox = document.querySelector(".box__questions");
+const highscoresBox = document.querySelector(".box__highscores")
+const startBtn = document.querySelector(".start-btn");
+const highscoreBtn = document.querySelector(".highscore-btn");
+const back = document.querySelector(".back");
+
+startBtn.addEventListener("click", () => {
+  box.classList.remove("unhide");
+  highscoresBox.classList.remove("unhide");
+  box.classList.add("hide");
+  highscoresBox.classList.add("hide");
+
+  questionsBox.classList.remove("hide");
+  questionsBox.classList.add("unhide");
+  console.log("startBtn");
+})
+
+back.addEventListener("click", () => {
+
+  box.classList.remove("unhide");
+  highscoresBox.classList.remove("unhide");
+  box.classList.add("hide");
+  highscoresBox.classList.add("hide");
+
+  questionsBox.classList.remove("hide");
+  questionsBox.classList.add("unhide");
+  console.log("back");
+})
+
+highscoreBtn.addEventListener("click", () => {
+  box.classList.remove("unhide");
+  box.classList.add("hide");
+  questionsBox.classList.remove("unhide");
+  questionsBox.classList.add("hide");
+
+  highscoresBox.classList.remove("hide");
+  highscoresBox.classList.add("unhide");
+  console.log("highscoreBtn");
+
+})
