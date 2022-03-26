@@ -204,6 +204,7 @@ highscoreBtn.addEventListener("click", () => {
 clearHighscores.addEventListener("click", () => {
   highscores = {};
   localStorage.setItem("highscores", JSON.stringify(highscores));
+  showStartScreen();
 });
 
 submit.addEventListener("click", () => {
