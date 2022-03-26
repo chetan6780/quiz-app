@@ -51,6 +51,7 @@ const questions = [
   },
 ];
 
+// ------------------------------------- All elements and variables -------------------------------------
 const box = document.querySelector(".box");
 const questionsBox = document.querySelector(".box__questions");
 const highscoresBox = document.querySelector(".box__highscores")
@@ -63,14 +64,18 @@ const playerName = document.querySelector("input");
 const submit = document.querySelector(".submit");
 const clearHighscores = document.querySelector(".clrHighScore");
 
-
 let points = 0;
 let timerVal = document.querySelector("span");
 let startTime = 50;
-
 let stopHere = true;
 
-// function to toggle hide and unhide
+let highscores = JSON.parse(localStorage.getItem("highscores"));
+if (highscores === null) { highscores = {} }
+let sortedHighscores = Object.entries(highscores).sort((a, b) => b[1] - a[1]);
+// ------------------------------------- All elements and variables -------------------------------------
+
+
+// ------------------------------------- All Functions -------------------------------------
 hideElement = (element) => {
   element.classList.remove("unhide");
   element.classList.add("hide");
@@ -79,12 +84,10 @@ unhideElement = (element) => {
   element.classList.remove("hide");
   element.classList.add("unhide");
 };
-
 startGame = () => {
   points = 0;
   startTime = 50;
 }
-
 showStartScreen = () => {
   unhideElement(box);
   hideElement(questionsBox);
@@ -92,8 +95,77 @@ showStartScreen = () => {
   hideElement(endBox);
 }
 
+timer = () => {
+  setInterval(function () {
+    if (startTime > 0) {
+      --startTime;
+      timerVal.innerHTML = startTime;
+    } else {
+      if (stopHere) {
+        gameEnd();
+        stopHere = false;
+      }
+    }
+  }, 1000);
+}
+
+showQuestions = (i) => {
+  if (i >= 5) {
+    const playerPoints = document.querySelector(".points");
+    playerPoints.innerHTML = `${points}`;
+    gameEnd();
+    return;
+  }
+
+  // Set the question
+  const question = document.querySelector(".question");
+  question.innerHTML = `${questions[i].questionText}`;
+
+  // result: Correct/Incorrect
+  let result = document.querySelector("#result");
+  for (const option of questions[i].options) {
+    const optionVal = document.createElement("p");
+    optionVal.classList.add("option");
+    optionVal.innerHTML = option;
+    question.appendChild(optionVal);
+  }
+
+  let answerText = "";
+  let multipleOptions = document.querySelectorAll(".option");
+  for (const selectedOption of multipleOptions) {
+    selectedOption.addEventListener("click", () => {
+      answerText = selectedOption.innerHTML;
+      unhideElement(hr);
+      if (answerText === questions[i].answer) {
+        result.innerHTML = "Correct!";
+        points += 10;
+      } else {
+        result.innerHTML = "Incorrect!";
+        startTime -= 10;
+      }
+
+      setTimeout(() => {
+        i++;
+        showQuestions(i);
+        result.innerHTML = "";
+        hideElement(hr);
+      }, 1000);
+    });
+  }
+};
+
+gameEnd = () => {
+  hideElement(box);
+  hideElement(questionsBox);
+  hideElement(highscoresBox)
+  unhideElement(endBox);
+};
+// ------------------------------------- All Functions -------------------------------------
+
+// ------------------------------------- All Button Actions -------------------------------------
 startBtn.addEventListener("click", () => {
   startGame();
+  showQuestions(0);
   hideElement(box);
   hideElement(highscoresBox);
   unhideElement(questionsBox);
@@ -105,80 +177,7 @@ back.addEventListener("click", () => {
   unhideElement(box);
 })
 
-gameEnd = () => {
-  hideElement(box);
-  hideElement(questionsBox);
-  hideElement(highscoresBox)
-  unhideElement(endBox);
-};
 
-
-// timer for 50 sec
-setInterval(function () {
-  if (startTime > 0) {
-    --startTime;
-    timerVal.innerHTML = startTime;
-  } else {
-    if (stopHere) {
-      gameEnd();
-      stopHere = false;
-    }
-  }
-}, 1000); // update about every second
-
-
-// questions & answer
-
-questionFunction = (i) => {
-  if (i >= 5) {
-    const playerPoint = document.querySelector(".points");
-    playerPoint.innerHTML = `${points}`;
-    gameEnd();
-    return;
-  }
-
-  const question = document.querySelector(".question");
-  question.innerHTML = `${questions[i].questionText}`;
-
-  let result = document.querySelector("#result");
-  for (const option of questions[i].options) {
-    const button = document.createElement("p");
-    button.classList.add("option");
-    button.innerHTML = option;
-    question.appendChild(button);
-  }
-
-  let answerText = "";
-  optionSelected = document.querySelectorAll(".option");
-  for (const option of optionSelected) {
-    option.addEventListener("click", () => {
-      answerText = option.innerHTML;
-      unhideElement(hr);
-      if (answerText === questions[i].answer) {
-        result.innerHTML = "Correct!";
-        points += 10;
-      } else {
-        startTime -= 10;
-        result.innerHTML = "Incorrect!";
-      }
-      setTimeout(() => {
-        i++;
-        questionFunction(i);
-        result.innerHTML = "";
-        hideElement(hr);
-      }, 1000);
-    });
-  }
-};
-
-questionFunction(0);
-
-
-
-// let highscores = { "DF": 10, "AG": 19, "JK": 43 };
-let highscores = JSON.parse(localStorage.getItem("highscores"));
-if (highscores === null) { highscores = {} }
-let sortedHighscores = Object.entries(highscores).sort((a, b) => b[1] - a[1]);
 
 highscoreBtn.addEventListener("click", () => {
   hideElement(box);
@@ -187,7 +186,6 @@ highscoreBtn.addEventListener("click", () => {
   unhideElement(highscoresBox);
 
   highscores = JSON.parse(localStorage.getItem("highscores"));
-  console.log(highscores);
   sortedHighscores = Object.entries(highscores).sort((a, b) => b[1] - a[1]);
 
   if (highscores !== null) {
@@ -201,22 +199,22 @@ highscoreBtn.addEventListener("click", () => {
   } else {
     highscores = {};
   }
-  console.log("highscoreBtn");
-})
+});
 
 clearHighscores.addEventListener("click", () => {
   highscores = {};
   localStorage.setItem("highscores", JSON.stringify(highscores));
-})
+});
 
 submit.addEventListener("click", () => {
-  showStartScreen();
-
   if (points != 0) {
     highscores[playerName.value] = points;
     sortedHighscores = Object.entries(highscores).sort((a, b) => b[1] - a[1]);
     localStorage.setItem("highscores", JSON.stringify(highscores));
   }
-
+  showStartScreen();
 });
-// }
+// ------------------------------------- All Button Actions -------------------------------------
+
+// timer for game
+timer();
