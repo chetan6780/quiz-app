@@ -20,7 +20,7 @@
 
     <main>
 
-        <div class="box box-style  unhide">
+        <div class="box box-style unhide">
             <h1>Coding Quiz Challenge</h1>
             <p>Try to answer the following code-related questions within the time limit.</p>
             <p>Keep in mind that incorrect answers will be penalize your score/time by time by 10 seconds.</p>
@@ -28,19 +28,16 @@
         </div>
 
 
-        <div class=" box-style box__questions hide">
+        <div class="box-style box__questions hide">
             <h1 class="question">Arrays in JavaScript can be used to store ______.</h1>
             <div class="options-list">
-                <!-- <p class="option">1. numbers and strings</p>
-                <p class="option">2. other arrays</p>
-                <p class="option">3. booleans</p>
-                <p class="option">4. all of the above</p> -->
+                <!-- options-list here -->
             </div>
-            <hr>
-            <p id="result">Correct</p>
+            <hr class="hide">
+            <p id="result"></p>
         </div>
 
-        <div class=" box-style box__highscores hide">
+        <div class="box-style box__highscores hide">
             <h1>Highscores</h1>
             <div class="list">
                 <ol>
@@ -48,15 +45,15 @@
                 </ol>
             </div>
             <button class="btn back">Go Back</button>
-            <button class="btn">Clear Highscores</button>
+            <button class="btn clrHighScore">Clear Highscores</button>
         </div>
 
         <div class="box-style box__end hide">
             <h1>All Done</h1>
-            <p>Your final score is 9.</p>
+            <p>Your final score is <span class="points">0</span>.</p>
             <p>
                 Enter initials: <input type="text">
-                <button class="btn">submit</button>
+                <button class="btn submit">submit</button>
             </p>
         </div>
     </main>
