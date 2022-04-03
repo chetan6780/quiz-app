@@ -52,6 +52,7 @@ main {
 .box-style {
     margin: 3rem;
     padding: 3rem;
+    max-width: 950px;
     border: 2px solid #ccc;
     border-radius: 30px;
     box-shadow: 5px 10px 18px #888888;

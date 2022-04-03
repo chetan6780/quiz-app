@@ -1,7 +1,7 @@
 const questions = [
   {
     questionText:
-      "Commonly used data types DO NOT include:",
+      "Q1.Commonly used data types DO NOT include:",
     options:
       ["1. strings", "2. booleans", "3. alerts", "4. numbers"],
     answer:
@@ -9,7 +9,7 @@ const questions = [
   },
   {
     questionText:
-      "Arrays in JavaScript can be used to store ______.",
+      "Q2.Arrays in JavaScript can be used to store ______.",
     options:
       [
         "1. numbers and strings",
@@ -22,7 +22,7 @@ const questions = [
   },
   {
     questionText:
-      "String values must be enclosed within _____ when being assigned to variables.",
+      "Q3.String values must be enclosed within _____ when being assigned to variables.",
     options:
       ["1. commas", "2. curly brackets", "3. quotes", "4. parentheses"],
     answer:
@@ -30,7 +30,7 @@ const questions = [
   },
   {
     questionText:
-      "A very useful tool used during development and debugging for printing content to the debugger is:",
+      "Q4.A very useful tool used during development and debugging for printing content to the debugger is:",
     options:
       [
         "1. JavaScript",
@@ -43,7 +43,7 @@ const questions = [
   },
   {
     questionText:
-      "Which of the following is a statement that can be used to terminate a loop, switch or label statement?",
+      "Q5.Which of the following is a statement that can be used to terminate a loop, switch or label statement?",
     options:
       ["1. break", "2. stop", "3. halt", "4. exit"],
     answer:
@@ -113,6 +113,7 @@ showQuestions = (i) => {
   if (i >= 5) {
     const playerPoints = document.querySelector(".points");
     playerPoints.innerHTML = `${points}`;
+    startTime = 0;
     gameEnd();
     return;
   }
@@ -155,6 +156,7 @@ showQuestions = (i) => {
 };
 
 gameEnd = () => {
+  timerVal.innerHTML = 0;
   hideElement(box);
   hideElement(questionsBox);
   hideElement(highscoresBox)
@@ -177,8 +179,6 @@ back.addEventListener("click", () => {
   unhideElement(box);
 })
 
-
-
 highscoreBtn.addEventListener("click", () => {
   hideElement(box);
   hideElement(questionsBox);
@@ -191,6 +191,10 @@ highscoreBtn.addEventListener("click", () => {
   if (highscores !== null) {
     // print highscores to page in ordered list
     const list = document.querySelector("ol");
+    // remove all previous childs of ol
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
+    }
     for (const [key, value] of sortedHighscores) {
       const li = document.createElement("li");
       li.innerHTML = `${key}: ${value}`;
@@ -218,4 +222,6 @@ submit.addEventListener("click", () => {
 // ------------------------------------- All Button Actions -------------------------------------
 
 // timer for game
-timer();
+if (startTime > 0) {
+  timer();
+}
